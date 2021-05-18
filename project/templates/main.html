@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<main>
+  <div class="description">
+    <p>Ресторан “Lorem ipsum”</p>
+    <p>+7 (812) ###-##-##</p>
+    <p>Великолепный вид. Вкусная еда. Приятная обстановка</p>
+    <div class="description_buttonBlock">
+      <button type="button" class="description_buttonBlock_button"><a href="#account">Забронировать столик</a></button>
+    </div>
+  </div>
+
+  <div class="gallery">
+    <div class="gallery__title">
+      <p>Галерея</p>
+    </div>
+    <div class="gallery__content">
+      <div class="row">
+        <div class="col-4">
+          <img src="{% static 'img/gallery/090-1.jpg' %}" alt="" class="gallery__content_img">
+        </div>
+        <div class="col-4">
+          <img src="{% static 'img/gallery/banket-1.png' %}" alt="" class="gallery__content_img">
+        </div>
+        <div class="col-4">
+          <img src="{% static 'img/gallery/AndreyNesterov_0413_2400-min.jpg' %}" alt="" class="gallery__content_img">
+        </div>
+        <div class="col-4">
+          <img src="{% static 'img/gallery/banket-2.png' %}" alt="" class="gallery__content_img">
+        </div>
+        <div class="col-4">
+          <img src="{% static 'img/gallery/wed-3-min.jpg' %}" alt="" class="gallery__content_img">
+        </div>
+        <div class="col-4">
+          <img src="{% static 'img/gallery/banket-3.png' %}" alt="" class="gallery__content_img">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a name="menu"></a>
+  <div class="menu">
+    <div class="menu__content">
+      <div class="menu__content_title">
+        <div class="menu__content_title_line"></div>
+        <p>Меню</p>
+        <div class="menu__content_title_line"></div>
+      </div>
+      <div class="menu__content_form">
+        <div class="row">
+          <div class="col-6 menu__content_element">
+            <img src="{% static 'img/kitchen.png' %}" alt="">
+            <p class="menu__content_element_title">Кухня</p>
+            <p class="menu__content_element_loading"><a href="">Загрузить</a></p>
+          </div>
+          <div class="col-6 menu__content_element">
+            <img src="{% static 'img/bar.png' %}" alt="">
+            <p class="menu__content_element_title">Бар</p>
+            <p class="menu__content_element_loading"><a href="">Загрузить</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="events">
+    <div class="events__title">
+      <p>Проводимые мероприятия</p>
+    </div>
+    <div class="events__selector">
+      <div class="events__selector_item events__selector_item_active" onclick="Selector_events(this)" data-value="0">Свадьбы</div>
+      <div class="events__selector_item" onclick="Selector_events(this)" data-value="1">Банкеты</div>
+    </div>
+    <div id="carouselExampleSlidesOnly" class="carousel slide events_content">
+      <div class="carousel-inner">
+        <div class="carousel-item events_carousel active" data-value="0">
+            <div class="events_content_block">
+              <div class="row">
+                <div class="col-6">
+                  <img src="{% static 'img/gallery/wife.jpg' %}" alt="" class="gallery__content_img">
+                </div>
+                <div class="col-6 wedding">
+                  <div class="wedding__content">
+                    <div class="wedding__content_title">
+                      <p>Свадьба</p>
+                    </div>
+                    <div class="wedding__content_text">
+                      <p>Самый запоминающийся праздник в Вашей жизни в просторном банкетном зале, вместимостью до 250 человек.Также в Вашем распоряжении уютная терраса с видом на парк, в котором при желании можем организовать выездную регистрацию. Меню от шеф-повара ресторана и собственная кондитерская,
+                         которая воплотит в жизнь любую Вашу сладкую идею. Профессиональный свет и звук, сцена. Собственная база подрядчиков.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="carousel-item events_carousel" data-value="1">
+          <div class="events_content_block">
+            <div class="row">
+              <div class="col-6">
+                <img src="{% static 'img/gallery/banket.jpg' %}" alt="" class="gallery__content_img">
+              </div>
+              <div class="col-6 wedding">
+                <div class="wedding__content">
+                  <div class="wedding__content_title">
+                    <p>Банкеты</p>
+                  </div>
+                  <div class="wedding__content_text">
+                    <p>Просторный банкетный зал, вместимостью до 250 человек идеально подойдет для юбилея, корпоративного или семейного праздника.
+                       Три варианта банкетного и фуршетного меню, выгодные условия и помощь в организации развлекательной программы на любой вкус.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="application">
+    <div class="application__content">
+      <div class="application__content_title">
+        <div class="application__content_title_line"></div>
+        <p>Оставить заявку на проведение мероприятия</p>
+        <div class="application__content_title_line"></div>
+      </div>
+      <div class="application__content_form">
+        <div class="row">
+          <div class="col-6 application__content_form_input">
+            <input type="text" name="" value="" placeholder="Имя">
+          </div>
+          <div class="col-6 application__content_form_input">
+            <input type="text" name="" value="" placeholder="E-mail">
+          </div>
+          <div class="col-6 application__content_form_input">
+            <input type="text" name="" value="" placeholder="Номер телефона">
+          </div>
+          <div class="col-6 application__content_form_input">
+            <input type="text" name="" value="" placeholder="Тип мероприятия">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <a href="{% static 'dogovor/policy.pdf' %}" target="_blank" class="href_pdf">Пользовательское соглашение</a>
+          </div>
+          <div class="col-6 confirm_application">
+            <button type="button" name="button">Отправить запрос</button>
+          </div>
+        </div>
+      </div>
+    </div>
+      <a name="account"></a>
+  </div>
+
+
+  <div class="account">
+    <div class="account__selector">
+      <div class="account__selector_item account__selector_item_active" onclick="Selector_profile(this)" data-value="0">Зарегистрироваться</div>
+      <div class="account__selector_item" onclick="Selector_profile(this)" data-value="1">Войти</div>
+      <div class="account__selector_item" onclick="Selector_profile(this)" data-value="2">Забыли пароль?</div>
+    </div>
+    <div id="carouselExampleSlidesOnly" class="carousel slide account_createAndAvtorization">
+      <div class="carousel-inner">
+        <div class="carousel-item account_carousel active" data-value="0">
+            <div class="account_createAndAvtorization_block">
+              <form action="/" method="post">
+                {% csrf_token %}
+                <input type="text" name="login" value="" placeholder="Логин">
+                <input type="email" name="email" value="" placeholder="E-mail">
+                <input type="tel" name="phone" value="" placeholder="Номер телефона">
+                <input type="password" name="password1" value="" placeholder="Пароль">
+                <input type="password" name="password2" value="" placeholder="Пароль ещё раз">
+                <button type="submit" name="button" value="1">Зарегистрироваться</button>
+              </form>
+            </div>
+        </div>
+        <div class="carousel-item account_carousel" data-value="1">
+          <div class="account_createAndAvtorization_block">
+            <form action="/" method="post">
+              {% csrf_token %}
+              <input type="text" id="login" name="login" value="" placeholder="Логин">
+              <input type="password" name="password" value="" placeholder="Пароль">
+              <button type="submit" name="button" value="2" onclick="Enter()">Войти</button>
+            </form>
+          </div>
+        </div>
+        <div class="carousel-item account_carousel" data-value="2">
+          <div class="account_createAndAvtorization_block">
+            <form action="/" method="post">
+              {% csrf_token %}
+              <input type="email" name="email" placeholder="E-mail">
+              <button type="submit" name="button" value="3">Отправить запрос</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <p class="hint">*Для осуществления брони необходимо войти в систему</p>
+    </div>
+  </div>
+
+  <a name="contact"></a>
+  <div class="contact">
+    <div class="events__title">
+      <p>Контакты</p>
+    </div>
+    <div class="contact__content">
+      <div class="contact__content_block">
+        <p class="contact__content_blockTitle">Наш адрес:</p>
+        <p class="contact__content_blockAdress">Санкт-Петербург, Приморский проспект, 80</p>
+        <p class="contact__content_blockPhone">+7 (812) ###-##-##</p>
+        <div class="contact__content_icon">
+          <img src="{% static 'img/vk.svg' %}" alt="">
+          <img src="{% static 'img/instagram (1).svg' %}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

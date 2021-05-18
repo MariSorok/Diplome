@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="/">Логотип</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse navbar__actions" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto navbar__actions_references">
+
+      </ul>
+      <form class="form-inline my-2 my-lg-0 navbar__actions_button">
+
+        <div class="profile_avatar">
+          <img src="{% static 'img/human_icon.svg' %}" alt="">
+        </div>
+        <div class="dropdown">
+          <a class="btn  dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ user.profile.phone }}
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item exit" href="{% url "logout" %}?next=/" class="btn">Выйти</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="profile">
+    <div class="profile__title">
+      <!-- <p>Профиль пользователя</p> -->
+    </div>
+    <div class="profile__inputs">
+      <!-- <div class="profile__inputs_avatar">
+        <img src="./img/human_icon.svg" alt="">
+      </div> -->
+      <div class="bookingForm__title">
+        <p>Подтверждение бронирования</p>
+      </div>
+      <div class="profile__inputs_field">
+        <div class="historyBlock">
+
+        {% for booking in bookings %}
+          <div class="historyBlock_oneblock row">
+            <div class="col-6" style="border-right: 1px solid black">
+              <p class="historyBlock_oneblock_text">Стол № {{ booking.table.number }}
+              </p>
+              <p class="historyBlock_oneblock_text">Имя: {{ booking.user.username }}</p>
+              <p class="historyBlock_oneblock_text">Номер телефона: {{ booking.user.profile.phone }}</p>
+              <p class="historyBlock_oneblock_text">Дата бронирования: {{ booking.booked_at }}</p>
+              <p class="historyBlock_oneblock_text">Количество персон: {{ booking.persons_num }}</p>
+              <div>
+              <form action="/admin_profile/confirmation/" method="post">
+                {% csrf_token %}
+                <button type="submit" name="disline" value="{{ booking.id }}" class="bad_button" style="margin-bottom: 5px;">Отклонить</button>
+              </form>
+              <form action="/admin_profile/confirmation/" method="post">
+                {% csrf_token %}
+                <button type="submit" name="accept" value="{{ booking.id }}" class="good_button">Подтвердить</button>
+              </form>
+              </div>
+            </div>
+            <div class="col-6">
+              <p class="historyBlock_order_text">{{ booking.preorder.dishes }}</p>
+            </div>
+          </div>
+        {% endfor %}
+{% comment %}
+          <div class="historyBlock_oneblock row">
+            <div class="col-6" style="border-right: 1px solid black">
+              <p class="historyBlock_oneblock_text">Стол № 11</p>
+              <p class="historyBlock_oneblock_text">Имя: Иван</p>
+              <p class="historyBlock_oneblock_text">Номер телефона: +78938906754</p>
+              <p class="historyBlock_oneblock_text">Дата бронирования: 14.04.2021</p>
+              <p class="historyBlock_oneblock_text">Вреня бронирования: 12:20</p>
+              <p class="historyBlock_oneblock_text">Количество персон: 3</p>
+              <div>
+                <button type="button" name="button" class="bad_button">Отклонить</button>
+                <button type="button" name="button" class="good_button">Подтвердить</button>
+              </div>
+            </div>
+            <div class="col-6">
+              <p class="historyBlock_order_text">Предварительный заказ отсутствует</p>
+            </div>
+          </div>
+
+          <div class="historyBlock_oneblock row">
+            <div class="col-6" style="border-right: 1px solid black">
+              <p class="historyBlock_oneblock_text">Стол № 10</p>
+              <p class="historyBlock_oneblock_text">Имя: Иван</p>
+              <p class="historyBlock_oneblock_text">Номер телефона: +78938906754</p>
+              <p class="historyBlock_oneblock_text">Дата бронирования: 13.04.2021</p>
+              <p class="historyBlock_oneblock_text">Вреня бронирования: 11:20</p>
+              <p class="historyBlock_oneblock_text">Количество персон: 1</p>
+              <div>
+                <button type="button" name="button" class="bad_button">Отклонить</button>
+                <button type="button" name="button" class="good_button">Подтвердить</button>
+              </div>
+            </div>
+            <div class="col-6">
+              <p class="historyBlock_order_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque consequuntur ut, reprehenderit, distinctio, commodi blanditiis iusto labore et dicta aliquam molestiae, soluta quidem. Deleniti odio quod minima id voluptas cumque.</p>
+            </div>
+          </div> {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Редактирование брони</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="bookingForm__content_inputs_unit_edit">
+          <label for="name">Дата бронирования:</label>
+          <input type="date" name="" value="2021-04-16" id='date'>
+        </div>
+        <div class="bookingForm__content_inputs_unit_edit">
+          <label for="name">Время бронирования:</label>
+          <input type="time" name="" value="15:20" placeholder="Введите дату" id='time'>
+        </div>
+        <div class="bookingForm__content_inputs_unit_edit">
+          <label for="name">Количество персон:</label>
+          <input type="number" min='1' max="4" value="4" id='piople'>
+        </div>
+        <textarea name="comment" cols="40" rows="5" placeholder="Предварительный заказ">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus dicta molestias quisquam et provident, ex a. Ratione dolore dolores provident quam, aut facere maiores culpa libero sit beatae perspiciatis, impedit.
+        </textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn delButton">Отклонить бронь</button>
+        <button type="button" class="btn btn-secondary">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{% static 'js/custom.js' %}"></script>
+<script type="text/javascript">
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+  })
+</script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="/">Логотип</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse navbar__actions" id="navbarSupportedContent" style="margin-left: 100px;">
+      <ul class="navbar-nav navbar__actions_references" style="margin-right: auto; margin-left: auto;;">
+        <li class="nav-item active" onclick="Nav(this)">
+          <a class="nav-link" href="/worker-profile/">Бронирование</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0 navbar__actions_button">
+
+        <div class="profile_avatar">
+          <img src="{% static 'img/human_icon.svg' %}" alt="">
+        </div>
+        <div class="dropdown">
+          <a class="btn  dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ user.profile.phone }}
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="/worker-edit/">Профиль</a>
+            <a class="dropdown-item exit" href="{% url "logout" %}?next=/" class="btn">Выйти</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+</header>
+
+
+<main style="padding-left: 150px;padding-right: 150px;">
+  <div class="bookingForm">
+    <div class="bookingForm__title">
+      <p>Резервирование</p>
+    </div>
+    <div class="profile__inputs_field">
+      <div class="historyBlock">
+
+      {% for booking in bookings %}
+        <div class="historyBlock_oneblock row">
+          <div class="col-6" style="border-right: 1px solid black">
+            <p class="historyBlock_oneblock_text">Стол № {{ booking.table.number }}
+            </p>
+            <p class="historyBlock_oneblock_text">Дата бронирования: {{ booking.booked_at }}</p>
+            <p class="historyBlock_oneblock_text">Количество персон: {{ booking.persons_num }}</p>
+            <form action="/worker-profile/" method="post">
+            {% csrf_token %}
+              <button type="submit" name="delete" value="{{ booking.id }}" class="close_booking">Закрыть бронь</button>
+            </form>
+          </div>
+          <div class="col-6">
+            <p class="historyBlock_order_text">{{ booking.preorder.dishes }}</p>
+          </div>
+        </div>
+      {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="{% static 'js/worker.js' %}"></script>
+<script>
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+  })
+</script>
+
+{% endblock %}

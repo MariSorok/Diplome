@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+
+
+<main>
+  <div class="bookingForm">
+    <div class="bookingForm__title">
+      <p>Резервирование</p>
+    </div>
+    <div class="bookingForm__content">
+      <div class="bookingForm__content_inputs">
+      <form action="/client-profile/" method="post">
+        <div class="row">
+
+          {% csrf_token %}
+          <div class="col-6 bookingForm__content_inputs_unit">
+            <label for="name">Дата бронирования:</label>
+            <input type="date" name="date"  placeholder="Введите дату" id='date'>
+            <button type="submit" class="enter_date" onclick="localStorage.setItem('test', document.getElementById('date').value)">Выбрать</button>
+          </div>
+
+          </form>
+          {% comment %} <div class="col-6 bookingForm__content_inputs_unit">
+            <label for="name">Время бронирования:</label>
+            <input type="time" name="" value="" placeholder="Введите дату" id='time'>
+          </div> {% endcomment %}
+          <div class="col-4 bookingForm__content_inputs_unit">
+            <label for="name">Количество персон:</label>
+            <input type="number" min='1' max="4" value="1" id='piople'>
+          </div>
+        </div>
+      </div>
+      <div id="popup">
+        <span aria-hidden="true" class='popup_arrow' onclick="Close_popup()">&times;</span>
+        <p class="popup_title">Стол № <span id = "table_number"></span></p>
+        <p class="popup_date">Дата: <span id = "popup_date"></span></p>
+        {% comment %} <p class="popup_time">Начиная с: <span id = "popup_time"></span></p> {% endcomment %}
+        <p class="popup_piople">Кол-во персон: <span id = "popup_piople"></span></p>
+        <button type="button" class="btn popup_button" data-toggle="modal" data-target="#exampleModal" >
+          Забронировать
+        </button>
+      </div>
+      <div class="bookingForm__content_map" id="bookingForm__content_map">
+        <div class="bookingForm__content_map_left_column">
+          <div class="cloakroom">
+            <img src="{% static './img/hanger.svg' %}" alt="">
+          </div>
+          <div class="wc1">
+            <img src="{% static './img/wc.svg' %}" alt="">
+          </div>
+          <div class="wc2">
+            <img src="{% static './img/wc.svg' %}" alt="">
+          </div>
+        </div>
+        <div class="bookingForm__content_map_left_column_2_0">
+          <div class="first_wall">
+            <div class="line1"></div>
+            <div class="line2"></div>
+          </div>
+          <div class="second_wall">
+            <div class="line3"></div>
+            <div class="line4"></div>
+          </div>
+          <div class="third_wall">
+            <div class="line5"></div>
+            <div class="line6"></div>
+          </div>
+        </div>
+        <div class="bookingForm__content_map_left_column_3_0">
+          <div class="bookingForm__content_map_left_column_3_0_first_wall">
+            <div class="bookingForm__content_map_left_column_3_0_first_wall_line1"></div>
+            <div class="bookingForm__content_map_left_column_3_0_first_wall_line2"></div>
+          </div>
+        </div>
+
+        <div class="hall">
+          <div class="first_row">
+            <div class="first_row_firstTable">
+            </div>
+
+            {% for table in tables %}
+
+            {% if table in i %}
+            <div class="second_row_secondTable">
+              <img src="{% static 'img/tables/furniture1_close.png' %}" alt="" class="table" onclick="Reserv(this)" data-value='{{ table.number }}' data-user="close">
+            </div>
+            {% else %}
+            <div class="first_row_secondTable">
+              <img src="{% static 'img/tables/furniture1.png' %}" alt="" class="table"  onclick="Reserv(this)" data-value='{{ table.number }}' data-user="open">
+            </div>
+            {% endif %}
+
+            {% if forloop.counter|divisibleby:4 %}
+              </div>
+            <div class="second_row_secondTable">
+              <div class="first_row_firstTable">
+              </div>
+            {% endif %}
+
+            {% endfor%}
+{% comment %}
+            {% if 2  in i %}
+            <div class="first_row_thirdTable">
+              <img src="{% static 'img/tables/furniture4.png' %}" alt="" class="table" onclick="Reserv(this)" data-value='2' data-user="open">
+            </div>
+           {% endif%}
+
+            {% if 3  in i %}
+            <div class="first_row_fourthTable">
+              <img src="{% static 'img/tables/furniture4.png' %}" alt="" class="table" onclick="Reserv(this)" data-value='3' data-user="open">
+            </div>
+            {% endif%}
+
+            {% if 4  in i %}
+            <div class="first_row_fifthTable">
+              <img src="{% static 'img/tables/furniture2_close.png' %}" alt="" class="table" onclick="Reserv(this)" data-value='4' data-user="close">
+            </div>
+          {% endif%}
+
+          {% if 5  in i %}
+          <div class="second_row">
+            <div class="second_row_firstTable">
+            </div>
+          {% endif%}
+          </div>
+
+
+
+          {% if 6  in i %}
+            <div class="second_row_secondTable">
+              <img src="{% static 'img/tables/furniture1_close.png' %}" alt="" class="table" onclick="Reserv(this)" data-value='12'>
+            </div>
+          {% endif %}
+
+          {% if 6  in i %}
+            <div class="second_row_thirdTable">
+              <img src="{% static 'img/tables/furniture1.png' %}" alt="" class="table" onclick="Reserv(this)" data-value='11'>
+            </div>
+          {% endif %}
+
+          {% if 7  in i %}
+            <div class="second_row_fourthTable">
+              <img src="{% static 'img/tables/furniture1_close.png' %}" alt="" class="table" onclick="Reserv(this)" data-value='10'>
+            </div>
+          {% endif%}
+
+
+
+          {% if 8  in i %}
+            <div class="second_row_fifthTable">
+              <img src="{% static 'img/tables/furniture4.png' %}" alt="" class="table" onclick="Reserv(this)" data-value='5'>
+            </div>
+          {% endif%}
+                    </div>
+
+
+
+
+
+
+
+
+           {% endcomment %}
+          <div style="display:flex; margin-top: -120px; margin-left: -50px;">
+            <div class="third_row">
+              <div class="third_row_firstTable">
+              </div>
+              <div class="third_row_secondTable">
+              </div>
+              <div class="third_row_thirdTable">
+              </div>
+              <div class="third_row_fourthTable">
+              </div>
+              <div class="third_row_fifthTable">
+                <img src="{% static 'img/tables/furniture3.png' %}" alt="" >
+                <img src="{% static 'img/tables/furniture3.png' %}" alt=""  class="table">
+                <img src="{% static 'img/tables/furniture3.png' %}" alt=""  class="table">
+                <img src="{% static 'img/tables/furniture3.png' %}" alt=""  class="table">
+                <img src="{% static 'img/tables/furniture3.png' %}" alt=""  class="table">
+              </div>
+            </div>
+
+            <div class="last_row">
+              <div class="last_row_firstTable">
+              </div>
+              <div class="last_row_secondTable">
+              </div>
+              <div class="last_row_thirdTable">
+                  <img src="{% static 'img/scene.jpg' %}" alt="">
+              </div>
+              <div class="last_row_fourthTable">
+                <img src="{% static 'img/tables/furniture3.png' %}" alt="" class="table">
+                <img src="{% static 'img/tables/furniture3.png' %}" alt="" class="table">
+                <img src="{% static 'img/tables/furniture3.png' %}" alt="" class="table">
+              </div>
+              <div class="last_row_fifthTable">
+                <img src="{% static 'img/furniture5.jpg' %}" alt="" style="transform: rotate(90deg);">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+</main>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form action="/client-profile/" method="post">
+      {% csrf_token %}
+      <input id="date_book" type="hidden" name="date" value="">
+      <input id="num_book" type="hidden" name="num" value="">
+      <input id="num_table" type="hidden" name="num_table" value="">
+      <div class="modal-body">
+        <p>Для важего удобства Вы можете оставить предварительный заказ (стакан воды, бутылка вина, салат цезарь и т.д).
+           Перед оставлением заказа ознакомьтесь с <a href="#" style="color: blue">меню</a> и условия <a href="#"  style="color: blue">предварительного заказа</a></p>
+        <p>*Если желаете отказаться от данной функции, то оставьте поле ввода пустым</p>
+        <textarea name="comment" cols="40" rows="3" placeholder="Предварительный заказ"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary" >Подтвердить</button>
+      </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Спасибо за то, что выбрали нас. В ближайшее время с Вами свяжутся для подтверждения блони. С уважение команда "Lorem ipsum"</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Продолжить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="{% static 'js/booking.js' %}"></script>
+<script>
+
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+  })
+
+</script>
+{% endblock %}

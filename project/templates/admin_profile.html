@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="/">Мука&#x301;</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse navbar__actions" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto navbar__actions_references">
+        <li class="nav-item" onclick="Nav(this)">
+            <a class="nav-link" href="/admin_profile/">Панель администратора</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0 navbar__actions_button">
+
+        <div class="profile_avatar">
+          <img src="{% static 'img/human_icon.svg' %}" alt="">
+        </div>
+        <div class="dropdown">
+          <a class="btn  dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ user.profile.phone }}
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item exit" href="{% url "logout" %}?next=/" class="btn">Выйти</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="bookingForm">
+    <div class="bookingForm__title">
+      <p>Панель администратора</p>
+    </div>
+    <div class="bookingForm__content">
+      <div class="profile__inputs">
+        <div class="admin__inputs_field">
+          <div class="admin_save_edit">
+            <button type="button" name="button" onclick="window.location.href = 'confirmation/';">Подтверждение бронирования</button>
+          </div>
+          <div class="admin_save_edit">
+            <button type="button" name="button" data-toggle="modal" data-target="#staticBackdrop">Добавить сотрудника</button>
+          </div>
+          <div class="admin_save_edit">
+            <button type="button" name="button" data-toggle="modal" data-target="#exampleModal1">Добавить блюдо</button>
+          </div>
+          <div class="admin_save_edit">
+            <button type="button" name="button" onclick="window.location.href = 'edit-menu/';">Редактировать меню</button>
+          </div>
+          <div class="admin_save_edit" style="margin-bottom: 480px;">
+            <button type="button" name="button" onclick="window.location.href = 'history/';">История бронирования</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- create worker -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Добавить сотрудника</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body create_worker">
+      <form action="/admin_profile/" method="post">
+        {% csrf_token %}
+        <p style="font-size: 18px;margin-bottom: 0;">Рабочие столы:</p>
+        <div class="row">
+          <div class="col-6">
+            <input type="text" name="table_from" placeholder="От">
+          </div>
+          <div class="col-6">
+            <input type="text" name="table_to" placeholder="До">
+          </div>
+        </div>
+        <input type="text" name="login" value="" placeholder="Логин">
+        <input type="text" name="email" value="" placeholder="E-mail">
+        <input type="text" name="phone" value="" placeholder="Номер телефона">
+        <input type="password" name="password1" value="" placeholder="Пароль">
+        <input type="password" name="password2" value="" placeholder="Пароль ещё раз">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary">Добавить</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal add -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить блюдо</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form action="/admin_profile/" method="post">
+        {% csrf_token %}
+      <div class="modal-body">
+        <div class="example-1">
+          <div class="form-group">
+            <label class="label">
+              <i class="material-icons"><img src="./img/paper_clip.svg" width="50" alt="" style="margin-left: auto; margin-right: auto;"></i>
+              <span class="title">Добавить файл</span>
+              {{ dish.image }}
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Категория</label>
+              {{ dish.category }}
+          </div>
+          <div class="form-group" style="margin-top: -30px;">
+            <label for="exampleFormControlInput">Название</label>
+            {{ dish.name }}
+          </div>
+          <div class="form-group" style="margin-top: -30px;">
+            <label for="exampleFormControlTextarea1">Описание</label>
+            {{ dish.description }}
+          </div>
+          <div class="form-group" style="margin-top: -30px;">
+            <label for="exampleFormControlInput2">Стоимость</label>
+            {{ dish.price }}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary">Сохранить</button>
+      </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<script src="{% static 'js/worker.js' %}"></script>
+<script>
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+  })
+</script>
+{% endblock %}

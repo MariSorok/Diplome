@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<main>
+  <div class="description">
+    <p>Ресторан “Мука&#x301;”</p>
+    <p>+7 (812) 702-46-46</p>
+    <p>Великолепный вид. Вкусная еда. Приятная обстановка</p>
+    <div class="description_buttonBlock">
+      <button type="button" class="description_buttonBlock_button"><a href="#account">Забронировать столик</a></button>
+    </div>
+  </div>
+
+  <div class="gallery">
+    <div class="gallery__title">
+      <p>Галерея</p>
+    </div>
+    <div class="gallery__content">
+      <div class="row">
+        <div class="col-4">
+          <img src="{% static 'img/gallery/1.jpg' %}" alt="" class="gallery__content_img">
+        </div>
+        <div class="col-4">
+          <img src="{% static 'img/gallery/2.jpg' %}" alt="" class="gallery__content_img">
+        </div>
+        <div class="col-4">
+          <img src="{% static 'img/gallery/3.jpg' %}" alt="" class="gallery__content_img">
+        </div>
+        <div class="col-4">
+          <img src="{% static 'img/gallery/4.jpg' %}" alt="" class="gallery__content_img">
+        </div>
+        <div class="col-4">
+          <img src="{% static 'img/gallery/5.jpg' %}" alt="" class="gallery__content_img">
+        </div>
+        <div class="col-4">
+          <img src="{% static 'img/gallery/6.jpg' %}" alt="" class="gallery__content_img">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="account">
+    <div class="account__selector">
+      <div class="account__selector_item account__selector_item_active" onclick="Selector_profile(this)" data-value="0">Зарегистрироваться</div>
+      <div class="account__selector_item" onclick="Selector_profile(this)" data-value="1">Войти</div>
+      <div class="account__selector_item" onclick="Selector_profile(this)" data-value="2">Забыли пароль?</div>
+    </div>
+    <div id="carouselExampleSlidesOnly" class="carousel slide account_createAndAvtorization">
+      <div class="carousel-inner">
+        <div class="carousel-item account_carousel active" data-value="0">
+            <div class="account_createAndAvtorization_block">
+              <form action="/" method="post">
+                {% csrf_token %}
+                <input type="text" name="login" value="" placeholder="Логин">
+                <input type="email" name="email" value="" placeholder="E-mail">
+                <input type="tel" name="phone" value="" placeholder="Номер телефона">
+                <input type="password" name="password1" value="" placeholder="Пароль">
+                <input type="password" name="password2" value="" placeholder="Пароль ещё раз">
+                <button type="submit" name="button" value="1">Зарегистрироваться</button>
+              </form>
+            </div>
+        </div>
+        <div class="carousel-item account_carousel" data-value="1">
+          <div class="account_createAndAvtorization_block">
+            <form action="/" method="post">
+              {% csrf_token %}
+              <input type="text" id="login" name="login" value="" placeholder="Логин">
+              <input type="password" name="password" value="" placeholder="Пароль">
+              <button type="submit" name="button" value="2" onclick="Enter()">Войти</button>
+            </form>
+          </div>
+        </div>
+        <div class="carousel-item account_carousel" data-value="2">
+          <div class="account_createAndAvtorization_block">
+            <form action="/" method="post">
+              {% csrf_token %}
+              <input type="email" name="email" placeholder="E-mail">
+              <button type="submit" name="button" value="3">Отправить запрос</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <p class="hint">*Для осуществления брони необходимо войти в систему</p>
+    </div>
+  </div>
+
+  <a name="contact"></a>
+  <div class="contact">
+    <div class="events__title">
+      <p>Контакты</p>
+    </div>
+    <div class="contact__content">
+      <div class="contact__content_block">
+        <p class="contact__content_blockTitle">Наш адрес:</p>
+        <p class="contact__content_blockAdress">Санкт-Петербург, Гаванская ул., 35, подъезд 1</p>
+        <p class="contact__content_blockPhone">+7 (812)702-46-46</p>
+        <div class="contact__content_icon">
+          <img src="{% static 'img/vk.svg' %}" alt="">
+          <img src="{% static 'img/instagram (1).svg' %}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

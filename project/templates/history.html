@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+
+
+<main>
+  <div class="profile">
+    <div class="profile__title">
+      <!-- <p>Профиль пользователя</p> -->
+    </div>
+    <div class="profile__inputs">
+      <!-- <div class="profile__inputs_avatar">
+        <img src="./img/human_icon.svg" alt="">
+      </div> -->
+      <div class="bookingForm__title">
+        <p>История бронирования</p>
+      </div
+      <div class="profile__inputs_field">
+        <div class="historyBlock">
+          {% comment %} <div class="historyBlock_oneblock row">
+            <div class="col-6" style="border-right: 1px solid black">
+              <p class="historyBlock_oneblock_text">Стол № 14
+                <span>
+                  <button type="button" class="btn" data-toggle="modal" data-target="#staticBackdrop">
+                    <img src="./img/edit_pen.svg" alt="" class="edit_pen">
+                  </button>
+                </span>
+              </p>
+              <p class="historyBlock_oneblock_text">Дата бронирования: 16.04.2021</p>
+              <p class="historyBlock_oneblock_text">Вреня бронирования: 15:20</p>
+              <p class="historyBlock_oneblock_text">Количество персон: 4</p>
+              <p class="historyBlock_oneblock_text">Статус: <span style="color: black">в ожидании</span></p>
+            </div>
+            <div class="col-6">
+              <p class="historyBlock_order_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque consequuntur ut, reprehenderit, distinctio, commodi blanditiis iusto labore et dicta aliquam molestiae, soluta quidem. Deleniti odio quod minima id voluptas cumque.</p>
+            </div>
+          </div> {% endcomment %}
+          {% for booking in bookings %}
+          <div class="historyBlock_oneblock row">
+            <div class="col-6" style="border-right: 1px solid black">
+              <p class="historyBlock_oneblock_text">Стол № {{ booking.table.number }}</p>
+              <p class="historyBlock_oneblock_text">Имя: {{ booking.user.username }}</p>
+              <p class="historyBlock_oneblock_text">Номер телефона: {{ booking.user.profile.phone }}</p>
+              <p class="historyBlock_oneblock_text">Дата бронирования: {{ booking.booked_at }}</p>
+              <p class="historyBlock_oneblock_text">Вреня бронирования: {{ booking.duration }}</p>
+              <p class="historyBlock_oneblock_text">Количество персон: {{ booking.persons_num }}</p>
+              <p class="historyBlock_oneblock_text">Статус: <span style="color: black">{{ booking.get_status_display }}</span></p>
+            </div>
+            <div class="col-6">
+              <p class="historyBlock_order_text">Предварительный заказ отсутствует</p>
+            </div>
+          </div>
+          {% endfor %}
+          {% comment %} <div class="historyBlock_oneblock row">
+            <div class="col-6" style="border-right: 1px solid black">
+              <p class="historyBlock_oneblock_text">Стол № 10</p>
+              <p class="historyBlock_oneblock_text">Дата бронирования: 13.04.2021</p>
+              <p class="historyBlock_oneblock_text">Вреня бронирования: 11:20</p>
+              <p class="historyBlock_oneblock_text">Количество персон: 1</p>
+              <p class="historyBlock_oneblock_text">Статус: <span style="color: green">подтверждено</span></p>
+            </div>
+            <div class="col-6">
+              <p class="historyBlock_order_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque consequuntur ut, reprehenderit, distinctio, commodi blanditiis iusto labore et dicta aliquam molestiae, soluta quidem. Deleniti odio quod minima id voluptas cumque.</p>
+            </div>
+          </div> {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="row">
+    <div class="col-3 footer_logo">
+      <a class="footer_logo_brand navbar-brand" href="#">Логотип</a>
+    </div>
+    <div class="col-9 footer_text">
+      <span>САНКТ-ПЕТЕРБУРГ, МЫТНИНСКАЯ НАБ. 6</span>
+      <span><a href="tel: 89110896942">+7(812) 313 88 66</a></span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Редактирование брони</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="bookingForm__content_inputs_unit_edit">
+          <label for="name">Дата бронирования:</label>
+          <input type="date" name="" value="2021-04-16" id='date'>
+        </div>
+        <div class="bookingForm__content_inputs_unit_edit">
+          <label for="name">Время бронирования:</label>
+          <input type="time" name="" value="15:20" placeholder="Введите дату" id='time'>
+        </div>
+        <div class="bookingForm__content_inputs_unit_edit">
+          <label for="name">Количество персон:</label>
+          <input type="number" min='1' max="4" value="4" id='piople'>
+        </div>
+        <textarea name="comment" cols="40" rows="5" placeholder="Предварительный заказ">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus dicta molestias quisquam et provident, ex a. Ratione dolore dolores provident quam, aut facere maiores culpa libero sit beatae perspiciatis, impedit.
+        </textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn delButton">Отклонить бронь</button>
+        <button type="button" class="btn btn-secondary">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/custom.js' %}"></script>
+<script type="text/javascript">
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+  })
+</script>
+{% endblock %}
